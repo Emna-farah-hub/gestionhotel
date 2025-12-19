@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <div class="card p-4 shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4 text-primary">{{ isEditMode ? 'Edit Room' : 'Add New Room' }}</h2>
+      <form (ngSubmit)="saveRoom()" #roomForm="ngForm">
+        <div class="mb-3">
+          <label for="roomNumber" class="form-label">Room Number</label>
+          <input type="text" class="form-control" id="roomNumber" [(ngModel)]="room.roomNumber" name="roomNumber" required #roomNumberField="ngModel">
+          <div *ngIf="roomNumberField.invalid && (roomNumberField.dirty || roomNumberField.touched)" class="alert alert-danger mt-1">
+            <div *ngIf="roomNumberField.errors?.['required']">Room Number is required.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" class="form-control" id="price" [(ngModel)]="room.price" name="price" required min="0" #priceField="ngModel">
+          <div *ngIf="priceField.invalid && (priceField.dirty || priceField.touched)" class="alert alert-danger mt-1">
+            <div *ngIf="priceField.errors?.['required']">Price is required.</div>
+            <div *ngIf="priceField.errors?.['min']">Price must be a positive number.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="type" class="form-label">Type</label>
+          <select class="form-select" id="type" [(ngModel)]="room.type" name="type" required #typeField="ngModel">
+            <option value="">Select Type</option>
+            <option value="Single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Suite">Suite</option>
+          </select>
+          <div *ngIf="typeField.invalid && (typeField.dirty || typeField.touched)" class="alert alert-danger mt-1">
+            <div *ngIf="typeField.errors?.['required']">Room type is required.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="capacity" class="form-label">Capacity</label>
+          <input type="number" class="form-control" id="capacity" [(ngModel)]="room.capacity" name="capacity" required min="1" #capacityField="ngModel">
+          <div *ngIf="capacityField.invalid && (capacityField.dirty || capacityField.touched)" class="alert alert-danger mt-1">
+            <div *ngIf="capacityField.errors?.['required']">Capacity is required.</div>
+            <div *ngIf="capacityField.errors?.['min']">Capacity must be at least 1.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="imageUpload" class="form-label">Upload Image</label>
+          <input type="file" class="form-control" id="imageUpload" (change)="onFileSelected($event)" accept="image/*">
+          <div *ngIf="imagePreview" class="mt-2">
+            <img [src]="imagePreview" alt="Image Preview" class="img-thumbnail" style="max-width: 200px;">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!roomForm.valid || !room.image">{{ isEditMode ? 'Save Changes' : 'Add Room' }}</button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

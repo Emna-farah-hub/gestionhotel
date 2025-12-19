@@ -1,0 +1,88 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Our Hotels</h2>
+
+  <!-- Filters Section -->
+  <div class="row mb-4">
+    <div class="col-md-4 mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by hotel name"
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()">
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Filter by city"
+        [(ngModel)]="filterCity"
+        (input)="applyFilters()">
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <select
+        class="form-select"
+        [(ngModel)]="filterStars"
+        (change)="applyFilters()">
+        <option [ngValue]="null">Filter by stars</option>
+        <option [ngValue]="1">1 Star</option>
+        <option [ngValue]="2">2 Stars</option>
+        <option [ngValue]="3">3 Stars</option>
+        <option [ngValue]="4">4 Stars</option>
+        <option [ngValue]="5">5 Stars</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Hotel Grid -->
+  <div
+    *ngIf="filteredHotels.length > 0; else noHotels"
+    class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+    <div class="col" *ngFor="let hotel of filteredHotels">
+      <div
+        class="card h-100 hotel-card"
+        [class.opacity-50]="hotel.status === 'inactive'"
+        (click)="viewHotelDetails(hotel.id)">
+
+        <img
+          [src]="hotel.image"
+          class="card-img-top"
+          alt="{{ hotel.name }}">
+
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ hotel.name }}
+            <span
+              class="badge ms-2"
+              [ngClass]="hotel.status === 'inactive' ? 'bg-secondary' : 'bg-success'">
+              {{ hotel.status }}
+            </span>
+          </h5>
+
+          <p class="card-text">
+            <span class="badge bg-primary me-2">{{ hotel.city }}</span>
+            <span class="badge bg-warning text-dark">
+              {{ hotel.stars }} <i class="bi bi-star-fill"></i>
+            </span>
+          </p>
+
+          <button
+            class="btn btn-sm btn-outline-dark mt-2"
+            (click)="$event.stopPropagation(); toggleStatus(hotel)">
+            switch Status
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noHotels>
+    <div class="alert alert-info text-center mt-4">
+      No hotels found matching your criteria.
+    </div>
+  </ng-template>
+</div>

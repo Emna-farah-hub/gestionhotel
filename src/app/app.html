@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/hotels">Hotel Management</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/hotels" routerLinkActive="active" aria-current="page">Home</a>
+        </li>
+      
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="hotelsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hotels
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="hotelsDropdown">
+            <li><a class="dropdown-item" routerLink="/hotels/add">Add Hotel</a></li>
+            <li><a class="dropdown-item" routerLink="/hotels">List Hotels</a></li>
+          </ul>
+        </li>
+
+      </ul>
+
+      <ul class="navbar-nav ms-auto m-2">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{authService.loggedUser || 'Guest'}}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <ng-container *ngIf="authService.isloggedIn">
+              <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="onLogout()">Logout</a></li>
+            </ng-container>
+            <ng-container *ngIf="!authService.isloggedIn">
+              <li><a class="dropdown-item" routerLink="/login">Login</a></li>
+            </ng-container>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container mt-5 pt-3"> <!-- Added padding-top to account for sticky navbar -->
+<router-outlet />
+</div>

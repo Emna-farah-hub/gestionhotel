@@ -1,0 +1,57 @@
+<div class="container mt-4" *ngIf="hotel">
+  <div class="card p-4 shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img [src]="hotel.image" class="img-fluid rounded-start hotel-detail-img" alt="{{ hotel.name }}">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h2 class="card-title text-primary mb-3">
+            {{ hotel.name }}
+          
+            <!-- STATUS BADGE -->
+            <span class="badge ms-2"
+                  [ngClass]="hotel.status === 'inactive' ? 'bg-secondary' : 'bg-success'">
+              {{ hotel.status }}
+            </span>
+          </h2>
+          
+          <p class="card-text text-muted mb-2"><i class="bi bi-geo-alt-fill"></i> {{ hotel.city }}</p>
+          <p class="card-text mb-3">
+            <span class="badge bg-warning text-dark me-2">{{ hotel.stars }} <i class="bi bi-star-fill"></i> Stars</span>
+          </p>
+          <p class="card-text description-text">{{ hotel.description }}</p>
+
+          <div class="d-flex justify-content-start mt-4 gap-2">
+            <button class="btn btn-warning" (click)="editHotel()">Edit Hotel</button>
+            <button class="btn btn-danger" (click)="deleteHotel()">Delete Hotel</button>
+            <button class="btn btn-info"
+        [disabled]="hotel.status === 'inactive'"
+        (click)="addRoomToHotel()">
+  Add Room
+</button>
+
+
+
+<!-- Warning message -->
+<p *ngIf="hotel.status === 'inactive'" class="text-danger mt-2">
+  This hotel is inactive. You cannot add rooms.
+</p>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mt-5 mb-3 text-primary">Rooms in {{ hotel.name }}</h3>
+  <app-room-list [hotelIdFromParent]="hotelId"></app-room-list> <!-- Embed the room list component and pass hotelId -->
+
+</div>
+
+<div class="container mt-4" *ngIf="!hotel">
+  <div class="alert alert-info text-center">
+    Hotel details not found.
+  </div>
+</div>

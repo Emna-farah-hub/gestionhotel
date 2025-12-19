@@ -1,0 +1,30 @@
+<div class="container mt-4" *ngIf="room">
+  <div class="card p-4 shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img [src]="room.image" class="img-fluid rounded-start room-detail-img" alt="Room {{ room.roomNumber }}" *ngIf="room.image">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h2 class="card-title text-primary mb-3">Room {{ room.roomNumber }}</h2>
+          <p class="card-text mb-2"><strong>Type:</strong> {{ room.type }}</p>
+          <p class="card-text mb-2"><strong>Capacity:</strong> {{ room.capacity }} people</p>
+          <p class="card-text mb-3"><strong>Price:</strong> {{ room.price | currency:'USD':'symbol':'1.2-2' }}</p>
+          <p class="card-text text-muted">Belongs to Hotel ID: {{ room.hotelId }}</p>
+
+          <div class="d-flex justify-content-start mt-4 gap-2">
+            <button class="btn btn-warning" (click)="editRoom()">Edit Room</button>
+            <button class="btn btn-danger" (click)="deleteRoom()">Delete Room</button>
+            <button class="btn btn-secondary" [routerLink]="['/hotels', room.hotelId]">Back to Hotel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4" *ngIf="!room">
+  <div class="alert alert-info text-center">
+    Room not found.
+  </div>
+</div>

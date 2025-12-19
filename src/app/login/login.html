@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card p-4 shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Login</h2>
+          <div class="alert alert-danger text-center" *ngIf="erreur === 1">
+            <strong>Login or password incorrect.</strong>
+      </div>
+      <form>
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" id="username" name="username" class="form-control" [(ngModel)]="user.username" required>
+            </div>
+            <div class="mb-4">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="user.password" required>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="button" (click)="onLoggedin()" class="btn btn-primary">Login</button>
+        </div>
+          </form>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>

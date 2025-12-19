@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <h3 class="mb-3 text-center" *ngIf="hotelIdFromParent">Rooms in Hotel</h3>
+  <h3 class="mb-3 text-center" *ngIf="!hotelIdFromParent">All Rooms</h3>
+
+  <!-- ✅ AVAILABILITY FILTER -->
+  <div class="mb-4">
+    <select class="form-select w-auto"
+            [(ngModel)]="availabilityFilter"
+            (change)="applyAvailabilityFilter()">
+      <option value="all">All rooms</option>
+      <option value="available">Available only</option>
+      <option value="unavailable">Unavailable only</option>
+    </select>
+  </div>
+
+  <!-- ROOM GRID -->
+  <div *ngIf="rooms.length > 0; else noRooms"
+       class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+    <div class="col" *ngFor="let room of rooms">
+      <div class="card h-100 room-card"
+           [class.opacity-50]="!room.available">
+
+        <img *ngIf="room.image"
+             [src]="room.image"
+             class="card-img-top room-img">
+
+        <div class="card-body">
+          <h5 class="card-title">
+            Room {{ room.roomNumber }} - {{ room.type }}
+
+            <!-- ✅ AVAILABILITY BADGE -->
+            <span class="badge ms-2"
+                  [ngClass]="room.available ? 'bg-success' : 'bg-secondary'">
+              {{ room.available ? 'Available' : 'Unavailable' }}
+            </span>
+          </h5>
+
+          <!-- ✅ PRICE -->
+          <div class="mb-2">
+            <label class="form-label mb-0">Price</label>
+            <input type="number"
+                   class="form-control form-control-sm"
+                   [(ngModel)]="room.price"
+                   (blur)="updatePrice(room)">
+          </div>
+
+          <p class="card-text mb-2">
+            Capacity: {{ room.capacity }} people
+          </p>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- ✅ TOGGLE AVAILABILITY -->
+            <button class="btn btn-sm btn-outline-dark"
+                    (click)="toggleAvailability(room)">
+              switch Availability
+            </button>
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-warning btn-sm"
+                      [routerLink]="['/rooms/edit', room.id]">
+                Edit
+              </button>
+
+              <button class="btn btn-danger btn-sm"
+                      (click)="deleteRoom(room.id!)">
+                Delete
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noRooms>
+    <div class="alert alert-info text-center mt-4">
+      No rooms found.
+    </div>
+  </ng-template>
+</div>
