@@ -11,10 +11,10 @@ import { User } from '../models/user';
 export class AuthService {
   public loggedUser!: string;
   public isloggedIn: boolean = false;
-  private _roles = new BehaviorSubject<string[]>([]); // Initialize with empty array
+  private _roles = new BehaviorSubject<string[]>([]); //  permet aux composants de réagir automatiquement aux changements de rôles.
   private apiUrl = 'http://localhost:3000/users';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {}//httpclient=communication avec backend router=navigation
 
   logout() {
     this.isloggedIn = false;
@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   isAdmin(): Observable<boolean> {
-    return this._roles.asObservable().pipe( // Use asObservable() to expose it
+    return this._roles.asObservable().pipe( //  asObservable() empêche les composants de modifier les rôles
       map(roles => {
         if (!roles || roles.length === 0) {
       return false;

@@ -1,12 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
-import { NgIf, CommonModule } from '@angular/common';
+import { NgIf, CommonModule } from '@angular/common'; //NgIf : directive conditionnelle
+
 import { AuthService } from './services/auth';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NgIf, CommonModule],
+  imports: [RouterOutlet, RouterLink, NgIf, CommonModule],//Déclare les dépendances utilisées dans le HTML//
   templateUrl: './app.html',
 })
 export class App implements OnInit {

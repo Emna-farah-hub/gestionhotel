@@ -18,7 +18,7 @@ export class AddHotel {
   constructor(private hs: Hotelservice, private router: Router) {}
 
   onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement;//Récupère le champ <input type="file">.//
     if (input.files && input.files[0]) {
       const file = input.files[0];
       const reader = new FileReader();
@@ -28,7 +28,7 @@ export class AddHotel {
         this.newHotel.image = reader.result as string;
       };
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file);//Convertit l’image en Base64 pour l’envoyer à JSON Server.//
     } else {
       this.imagePreview = null;
       this.newHotel.image = '';
@@ -41,7 +41,7 @@ export class AddHotel {
 
     this.hs.addHotel(this.newHotel).subscribe(() => {
       this.router.navigate(['/hotels']);
-    });
+    });//Envoie l’hôtel au backend via le service. 
   }
 
   cancel() {
